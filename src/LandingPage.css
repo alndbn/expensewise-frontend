@@ -1,0 +1,69 @@
+/* Nur noch spezifisches Design für den Inhalt der LandingPage */
+
+.landing-page {
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(0, 0, 0, 0.6);
+    min-height: 100vh; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; /* Zentriert den Textblock auf dem Papier */
+    position: relative;
+    padding-top: 100px; /* Platz für das Logo oben lassen */
+}
+
+.main-content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 10px; 
+    color: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid #d1cfc0;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.subtitle {
+    margin-bottom: 30px;
+    line-height: 1.5;
+    max-width: 600px;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+}
+
+.features-list li {
+    padding: 5px 10px;
+    font-size: 14px;
+    border-right: 1px solid #d1cfc0; 
+}
+
+.features-list li:last-child {
+    border-right: none;
+}
+
+.cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+.btn-get-started, .btn-login {
+    color: #FF0707;
+    text-decoration: none;
+}
