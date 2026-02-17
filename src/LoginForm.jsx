@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './LandingPage.css'; // Notizbuch-Hintergrund wiederverwenden
+import './LandingPage.css';
 
-function LoginForm({ isLoggedIn }) {
+function LoginForm({ isLoggedIn, onLoginSuccess }) {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    // Logo-Klick: eingeloggt → Dashboard, sonst → LandingPage
     const handleLogoClick = () => {
         if (isLoggedIn) {
             navigate('/dashboard');
@@ -19,7 +18,6 @@ function LoginForm({ isLoggedIn }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Send Data to Backend...");
         try {
             const response = await fetch('http://127.0.0.1:5000/login', {
                 method: 'POST',
@@ -33,30 +31,25 @@ function LoginForm({ isLoggedIn }) {
             }
             const data = await response.json();
             setError("");
-            console.log("Success:", data);
+            onLoginSuccess(data.user.username, data.user.id);
+            navigate('/dashboard');
         } catch (error) {
             setError("Connection to server went wrong.");
         }
     };
 
     return (
-        // Gleicher Notizbuch-Wrapper wie die LandingPage
         <div className="landing-page">
             <header className="header">
-                <div
-                    className="logo"
-                    onClick={handleLogoClick}
-                    style={{ cursor: 'pointer' }}
-                >
+                <div className="logo" onClick={handleLogoClick}>
                     ExpenseWise
                 </div>
             </header>
-
             <main className="main-content">
                 <form onSubmit={handleSubmit}>
                     {error && <p style={{ color: "red" }}>{error}</p>}
                     <div>
-                        <label htmlFor="email-field">Email</label>
+                        <label>Email</label>
                         <input
                             type="email"
                             value={email}
@@ -64,7 +57,7 @@ function LoginForm({ isLoggedIn }) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="password-field">Passwort</label>
+                        <label>Passwort</label>
                         <input
                             type="password"
                             value={password}

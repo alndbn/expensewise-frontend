@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/* ================================================
+   DASHBOARD SEITE
+   ================================================ */
+
+.dashboard-page {
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(0, 0, 0, 0.6);
+    min-height: 100vh;
+    width: 100%;
+    background-color: #E7E4D7;
+
+    /* Horizontale Notizbuchlinien */
+    background-image: linear-gradient(#d1cfc0 1px, transparent 1px);
+    background-size: 100% 35px;
+
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Rote Linie — trennt Sidebar vom Content */
+.dashboard-page::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 220px;
+    width: 1px;
+    background-color: rgba(220, 50, 50, 0.5);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Rechte graue Linie */
+.dashboard-page::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 40px;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ================================================
+   HEADER
+   ================================================ */
+
+.dashboard-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 60px 10px 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(220, 50, 50, 0.4);
+    z-index: 2;
+}
+
+.dashboard-logo {
+    color: #FF0707;
+    background: none;
+    border: none;
+    font-family: 'Inter', monospace !important;
+    font-size: 40px !important;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+
+}
+
+.dashboard-signout {
+    background: none;
+    border: none;
+    font-family: 'Inter', monospace !important;
+    font-size: 40px !important;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.75) !important;
+    cursor: pointer;
+}
+
+.dashboard-signout:hover {
+    opacity: 0.6;
+}
+
+/* ================================================
+   BODY: Sidebar + Content nebeneinander
+   ================================================ */
+
+.dashboard-body {
+    display: flex;
+    flex: 1;
+    z-index: 2;
+}
+
+/* ================================================
+   SIDEBAR — genau 220px, bis zur roten Linie
+   ================================================ */
+
+.dashboard-sidebar {
+    width: 220px;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.sidebar-link {
+    font-size: 20px;
+    line-height: 35px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    border-bottom: 1px solid #d1cfc0;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.sidebar-link:first-child {
+    border-top: 1px solid #d1cfc0;
+}
+
+.sidebar-link.active,
+.sidebar-link:hover {
+    color: #FF0707;
+}
+
+/* ================================================
+   CONTENT — rechts von der Sidebar
+   ================================================ */
+
+.dashboard-content {
+    flex: 1;
+    padding: 35px 60px 0 30px;
+    box-sizing: border-box;
+}
+
+.dashboard-greeting {
+    color: #FF0707;
+    font-size: 17px;
+    line-height: 35px;
+    margin: 0 0 35px 0;
+}
+
+.dashboard-greeting::before { content: "[ "; }
+.dashboard-greeting::after  { content: " ]"; }
+
+.dashboard-balance {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.75);
+    line-height: 35px;
+    margin: 0 0 70px 0;
+}
+
+.btn-add-expenses {
+    background: none;
+    border: none;
+    color: #FF0707;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 17px;
+    cursor: pointer;
+    line-height: 35px;
+    padding: 0;
+}
+
+.btn-add-expenses::before { content: "[ "; }
+.btn-add-expenses::after  { content: " ]"; }
+
+.btn-add-expenses:hover {
+    opacity: 0.7;
+}

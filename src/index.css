@@ -1,101 +1,13 @@
-/* ==========================================================================
-   GLOBALE BASIS (Gilt für ALLE Routen: Landingpage, Login, Register)
-   ========================================================================== */
-
-/* 1. Das Papier-Design (Hintergrund-Linien horizontal) */
-html {
-  min-height: 100vh;
+/* absolutes Minimum — kein Layout, keine Linien, kein Styling hier */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #E7E4D7;
-  background-image: linear-gradient(rgba(209, 207, 192, 0.6) 1px, transparent 1px);
-  background-size: 100% 35px;
-  background-attachment: fixed;
-  position: relative;
 }
 
-/* 2. Die roten Rand-Linien (vertikal) */
-html::before, html::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  z-index: 10;
-  pointer-events: none;
-}
-html::before { left: 40px; width: 2px; background-color: rgba(255, 7, 7, 0.5); height: 100%; }
-html::after { left: 47px; width: 1px; background-color: rgba(255, 7, 7, 0.3); height: 100%; }
-
-/* 3. Standardschrift & Grundfarben (Beeinflusst Texte überall) */
-:root {
-  font-family: 'JetBrains Mono', monospace;
-  color: #FF0707;
-}
-/* 3. Header & Logo - Jetzt oben fixiert */
-.header {
-    position: fixed; /* Damit es immer oben bleibt */
-    top: 0;
-    left: 60px; /* Schön weit weg von den roten Linien */
-    width: 100%;
-    padding: 20px 0;
-    z-index: 100; /* Ganz nach vorne */
-    display: flex;
-    justify-content: flex-start;
-}
-
-.logo {
-    color: #FF0707;
-    font-weight: bold;
-    font-size: 28px;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-/* 4. Die "Hülle" deiner App (Zentriert den Inhalt jeder Route) */
-body, #root, .App {
+html, body, #root {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column; /* Sorgt dafür, dass Header oben und Content darunter ist */
-  align-items: center;
-  justify-content: center;
-  background: transparent !important;
-}
-
-/* ==========================================================================
-   KOMPONENTEN-STYLING (Beeinflusst LoginForm.jsx & RegisterForm.jsx)
-   ========================================================================== */
-
-/* 5. Überschriften (z.B. "Login" oder "Register") */
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-/* 6. Formular-Container (Hält die Eingabefelder in Login & Register zusammen) */
-form {
-  max-width: 400px;
-  display: flex;      
-  flex-direction: column; 
-  gap: 15px;
-  padding-left: 20px; 
-}
-
-/* 7. Eingabefelder (Die weißen Boxen in deinen Formularen) */
-input {
-  background-color: #ffffff;
-  border: 1px solid #d1cfc0;
-  padding: 12px;
-  max-width: 300px;
-}
-
-/* 8. Die Buttons (Abschicken-Knöpfe in Login & Register) */
-button {
-  background-color: #FF0707;
-  color: white;
-  padding: 0.6em 1.2em;
-  border-radius: 8px;
-}
-
-/* 9. Links (z.B. "Noch kein Account? Registrieren" unter dem Formular) */
-a {
-  color: #37383b;
-  text-decoration: underline;
+  width: 100%;
+  background-color: #E7E4D7;
+  font-family: 'JetBrains Mono', monospace;
 }

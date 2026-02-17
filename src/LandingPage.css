@@ -1,69 +1,196 @@
-/* Nur noch spezifisches Design für den Inhalt der LandingPage */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* ================================================
+   NOTIZBUCH-SEITE
+   Wird verwendet von: LandingPage, LoginForm, RegisterForm und später noch von anderen
+   ================================================ */
 
 .landing-page {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #E7E4D7;
+
+    /* Horizontale Notizbuchlinien */
+    background-image: linear-gradient(#d1cfc0 1px, transparent 1px);
+    background-size: 100% 35px;
+
     font-family: 'JetBrains Mono', monospace;
     color: rgba(0, 0, 0, 0.6);
-    min-height: 100vh; 
-    width: 100%;
+
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; /* Zentriert den Textblock auf dem Papier */
     position: relative;
-    padding-top: 100px; /* Platz für das Logo oben lassen */
+    box-sizing: border-box;
 }
 
+/* Linke rote vertikale Linie */
+.landing-page::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 220px;
+    width: 1px;
+    background-color: rgba(220, 50, 50, 0.5);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Rechte graue vertikale Linie */
+.landing-page::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 40px;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ================================================
+   HEADER — Logo links oben
+   ================================================ */
+
+.header {
+    width: 100%;
+    padding: 25px 40px 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(220, 50, 50, 0.4);
+}
+
+.logo {
+    color: #FF0707;
+    font-weight: bold;
+    font-size: 26px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ================================================
+   HAUPTINHALT — zentriert für LandingPage
+   ================================================ */
+
 .main-content {
-    width: 80%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    z-index: 1;
+    padding: 60px 20px 60px 20px;
+    box-sizing: border-box;
 }
 
 h1 {
-    font-size: 30px;
-    margin-bottom: 10px; 
-    color: rgba(0, 0, 0, 0.7);
-    border-bottom: 1px solid #d1cfc0;
-    display: inline-block;
-    padding-bottom: 5px;
+    font-size: 32px;
+    color: rgba(0, 0, 0, 0.75);
+    margin-bottom: 20px;
+    line-height: 35px;
 }
 
 .subtitle {
-    margin-bottom: 30px;
-    line-height: 1.5;
-    max-width: 600px;
+    font-size: 15px;
+    line-height: 35px;
+    margin-bottom: 50px;
+    max-width: 700px;
 }
+
+/* ================================================
+   FEATURES-LISTE
+   ================================================ */
 
 .features-list {
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px auto;
+    margin: 0 0 40px 0;
+    width: 100%;
+    max-width: 700px;
+    text-align: left;
 }
 
 .features-list li {
-    padding: 5px 10px;
-    font-size: 14px;
-    border-right: 1px solid #d1cfc0; 
+    font-size: 15px;
+    line-height: 35px;
+    padding: 17px 10px;
+    border-bottom: 1px solid #d1cfc0;
 }
 
-.features-list li:last-child {
-    border-right: none;
+.features-list li:first-child {
+    border-top: 1px solid #d1cfc0;
 }
+
+/* ================================================
+   BUTTONS
+   ================================================ */
 
 .cta-buttons {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 20px;
+    align-items: center;
+    gap: 5px;
 }
-.btn-get-started, .btn-login {
+
+.btn-get-started,
+.btn-login {
+    background: none;
+    border: none;
     color: #FF0707;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    line-height: 35px;
     text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-get-started:hover,
+.btn-login:hover {
+    opacity: 0.7;
+}
+
+/* ================================================
+   FORMULAR — für Login & Register
+   ================================================ */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+}
+
+form label {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+    display: block;
+    margin-bottom: 4px;
+}
+
+form input {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #d1cfc0;
+    padding: 10px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+form button[type="submit"] {
+    background-color: #FF0707;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+}
+
+form button[type="submit"]:hover {
+    opacity: 0.85;
 }
