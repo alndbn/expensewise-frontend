@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -6,10 +6,13 @@ import Crosshair from "./Crosshair";
 import LandingPage from './LandingPage';
 import Dashboard from './Dashboard';
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [userId, setUserId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
 
   const handleLoginSuccess = (name, id) => {
     setIsLoggedIn(true);
@@ -22,6 +25,27 @@ function App() {
     setUsername('');
     setUserId(null);
   };
+
+  useEffect(() => {
+    fetch('/api/me', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()  
+        }
+      })
+      .then(data => {
+        if (data) {
+          handleLoginSuccess(data.username, data.id) 
+        }
+        setIsLoading(false)
+      })
+  }, [])
+
+  if (isLoading) return null
 
   return (
     <Router>

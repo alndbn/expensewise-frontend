@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './LandingPage.css';
 
 function LoginForm({ isLoggedIn, onLoginSuccess }) {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState(""); //useState wie Variable, die Veränderungen beobachtet
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
@@ -16,10 +16,10 @@ function LoginForm({ isLoggedIn, onLoginSuccess }) {
         }
     };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => { //handleSubmit wird aufgerufen wenn user auf login klickt und schickt Daten ans Backend
         event.preventDefault();
         try {
-            const response = await fetch('http://127.0.0.1:5000/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -31,14 +31,20 @@ function LoginForm({ isLoggedIn, onLoginSuccess }) {
             }
             const data = await response.json();
             setError("");
+            localStorage.setItem('access_token', data.access_token)
             onLoginSuccess(data.user.username, data.user.id);
             navigate('/dashboard');
         } catch (error) {
             setError("Connection to server went wrong.");
         }
     };
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate ('/dashboard')
+        }
+    }, [])
 
-    return (
+    return ( //return = Teil, welchen der User sieht
         <div className="landing-page">
             <header className="header">
                 <div className="logo" onClick={handleLogoClick}>

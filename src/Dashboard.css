@@ -67,12 +67,11 @@
     color: #FF0707;
     background: none;
     border: none;
-    font-family: 'Inter', monospace !important;
-    font-size: 40px !important;
+    font-family: 'Inter', monospace;
+    font-size: 40px;
     font-weight: bold;
     cursor: pointer;
     user-select: none;
-
 }
 
 .dashboard-signout {
