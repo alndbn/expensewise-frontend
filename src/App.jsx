@@ -12,12 +12,14 @@ function App() {
   const [username, setUsername] = useState('');
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [monthlyBudget, setMonthlyBudget] = useState(0);
   
 
-  const handleLoginSuccess = (name, id) => {
+  const handleLoginSuccess = (name, id, monthlyBudget) => {
     setIsLoggedIn(true);
     setUsername(name);
     setUserId(id);
+    setMonthlyBudget(monthlyBudget);
   };
 
   const handleSignOut = () => {
@@ -39,7 +41,7 @@ function App() {
       })
       .then(data => {
         if (data) {
-          handleLoginSuccess(data.username, data.id) 
+          handleLoginSuccess(data.username, data.id, data.monthly_budget) 
         }
         setIsLoading(false)
       })
@@ -73,6 +75,7 @@ function App() {
               userId={userId}
               isLoggedIn={isLoggedIn}
               onSignOut={handleSignOut}
+              monthlyBudget={monthlyBudget}
             />
           }
         />

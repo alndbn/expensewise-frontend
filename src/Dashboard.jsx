@@ -2,7 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
-function Dashboard({ username, userId, isLoggedIn, onSignOut }) { //isLoggedIn, onSignOut props-daten, die von außen eingebettet werden, username/userId kommen vom login
+function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) { //isLoggedIn, onSignOut props-daten, die von außen eingebettet werden, username/userId kommen vom login
     const navigate = useNavigate();
     const [activePage, setActivePage] = useState('Dashboard');
     const [summary, setSummary] = useState([]);
@@ -16,6 +16,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut }) { //isLoggedIn, 
     const sidebarLinks = ['Dashboard', 'Transactions', 'Saving Goals', 'Receipts', 'Settings'];
 
     const handleSignOut = () => {
+        localStorage.removeItem('access_token')
         onSignOut();
         navigate('/');
     };
@@ -29,23 +30,37 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut }) { //isLoggedIn, 
         }
     };
 
-    useEffect(() => {
-    fetch(`/api/expenses/user/${userId}/summary`, {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
-    })
-    .then(response => {
+
+    const fetchSummary = async() => {
+        const response = await fetch(`/api/expenses/user/${userId}/summary`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
         if (response.ok) {
-            return response.json()
+                    const data = await response.json()
+                    setSummary(data)
         }
-    })
-    .then(data => {
-        if (data) {
-            setSummary(data)
+    }
+
+    useEffect(() => {
+    fetchSummary()
+        }, [])
+
+    const handleSaveExpenses = async () => {
+        const response = await fetch('/api/expenses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            },
+            body: JSON.stringify({title, amount, category, date, user_id: userId})
+        })
+        if(response.ok) {
+            setIsModalOpen(false)
+            fetchSummary()
         }
-    })
-}, [])
+    }
 
 
     return (
@@ -83,7 +98,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut }) { //isLoggedIn, 
                         Hello {username}
                     </p>
                     <p className="dashboard-balance">
-                        Current Balance: {summary["total amount"]}€
+                        Current Balance: {monthlyBudget - summary["total amount"]}€ 
                     </p>
                     <button className="btn-add-expenses" onClick={() => setIsModalOpen(true)}>
                         Add expenses
