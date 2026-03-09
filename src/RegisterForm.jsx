@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './LandingPage.css'; // Notizbuch-Hintergrund wiederverwenden
 
+
 function RegisterForm({ isLoggedIn }) {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -44,7 +45,6 @@ function RegisterForm({ isLoggedIn }) {
     };
 
     return (
-        // Gleicher Notizbuch-Wrapper wie die LandingPage
         <div className="landing-page">
             <header className="header">
                 <div

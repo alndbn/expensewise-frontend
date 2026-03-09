@@ -11,6 +11,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
     const [amount, setAmount] = useState("");
     const [category, setCategory] = useState("");
     const [date, setDate] = useState("");
+    const [expenses, setExpenses] = useState([]);
 
 
     const sidebarLinks = ['Dashboard', 'Transactions', 'Saving Goals', 'Receipts', 'Settings'];
@@ -38,14 +39,27 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
             }
         })
         if (response.ok) {
-                    const data = await response.json()
-                    setSummary(data)
+            const data = await response.json()
+            setSummary(data)
+        }
+    }
+
+    const fetchExpenses = async() => {
+        const response = await fetch(`/api/expenses/user/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
+        if (response.ok) {
+            const data = await response.json()
+            setExpenses(data)
         }
     }
 
     useEffect(() => {
-    fetchSummary()
-        }, [])
+        fetchSummary()
+        fetchExpenses()
+    }, [])
 
     const handleSaveExpenses = async () => {
         const response = await fetch('/api/expenses', {
@@ -94,16 +108,18 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
 
                 {/* CONTENT */}
                 <main className="dashboard-content">
-                    <p className="dashboard-greeting">
-                        Hello {username}
-                    </p>
-                    <p className="dashboard-balance">
-                        Current Balance: {monthlyBudget - summary["total amount"]}€ 
-                    </p>
-                    <button className="btn-add-expenses" onClick={() => setIsModalOpen(true)}>
-                        Add expenses
-                    </button>
-                    {isModalOpen && (
+                    {activePage === 'Dashboard' && (
+                        <div>
+                        <p className="dashboard-greeting">
+                            Hello {username}
+                        </p>
+                        <p className="dashboard-balance">
+                            Current Balance: {monthlyBudget - summary["total amount"]}€ 
+                        </p>
+                        <button className="btn-add-expenses" onClick={() => setIsModalOpen(true)}>
+                            Add expenses
+                        </button>
+                        {isModalOpen && (
                         <div className="modal">
                             {/* title */}
                             <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -123,9 +139,32 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
                                 Save
                             </button>
                         </div>
+                        )}
+                    </div>
+                    )}
+                    {activePage === 'Transactions' && (
+                        <div>
+                            {expenses.map((expenses) => (
+                            <p key={expenses.id}>{expenses.title} - {expenses.amount}€</p>
+                            ))}
+                        </div>
+                    )}
+                    {activePage === 'Saving Goals' && (
+                        <div>
+
+                        </div>
+                    )}
+                    {activePage === 'Receipts' && (
+                        <div>
+
+                        </div>
+                    )}
+                    {activePage === 'Settings' && (
+                        <div>
+                            
+                        </div>
                     )}
                 </main>
-
             </div>
         </div>
     );

@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import Crosshair from "./Crosshair";
 import LandingPage from './LandingPage';
 import Dashboard from './Dashboard';
+
+
+function ProtectedRoute({ children, isLoggedIn }) {
+        if (!isLoggedIn) {
+            return <Navigate to="/login" />
+        }
+        return children
+     }
+
+
+function PublicRoute({children, isLoggedIn}) {
+    if (isLoggedIn) {
+        return <Navigate to="/dashboard" />
+    }
+    return children
+}
+
 
 
 function App() {
@@ -13,6 +30,7 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [monthlyBudget, setMonthlyBudget] = useState(0);
+ 
   
 
   const handleLoginSuccess = (name, id, monthlyBudget) => {
@@ -35,6 +53,12 @@ function App() {
       }
     })
       .then(response => {
+        if (response.status === 401) {
+          localStorage.removeItem('access_token')
+          setIsLoading(false)
+          window.location.href="/login"
+          return 
+        }
         if (response.ok) {
           return response.json()  
         }
@@ -57,26 +81,34 @@ function App() {
         <Route
           path='/login'
           element={
-            <LoginForm
-              isLoggedIn={isLoggedIn}
-              onLoginSuccess={handleLoginSuccess}
-            />
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <LoginForm
+                isLoggedIn={isLoggedIn}
+                onLoginSuccess={handleLoginSuccess}
+              />
+            </PublicRoute>
           }
         />
         <Route
           path='/register'
-          element={<RegisterForm isLoggedIn={isLoggedIn} />}
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <RegisterForm isLoggedIn={isLoggedIn} />
+            </PublicRoute>
+          }
         />
         <Route
           path='/dashboard'
           element={
-            <Dashboard
-              username={username}
-              userId={userId}
-              isLoggedIn={isLoggedIn}
-              onSignOut={handleSignOut}
-              monthlyBudget={monthlyBudget}
-            />
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Dashboard
+                username={username}
+                userId={userId}
+                isLoggedIn={isLoggedIn}
+                onSignOut={handleSignOut}
+                monthlyBudget={monthlyBudget}
+              />
+            </ProtectedRoute>
           }
         />
       </Routes>
