@@ -144,24 +144,26 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
                     )}
                     {activePage === 'Transactions' && (
                         <div>
-                            {expenses.map((expenses) => (
-                            <p key={expenses.id}>{expenses.title} - {expenses.amount}€</p>
-                            ))}
-                        </div>
-                    )}
-                    {activePage === 'Saving Goals' && (
-                        <div>
-
-                        </div>
-                    )}
-                    {activePage === 'Receipts' && (
-                        <div>
-
-                        </div>
-                    )}
-                    {activePage === 'Settings' && (
-                        <div>
-                            
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {expenses.map((expense) => (
+                                        <tr key={expense.id}>
+                                            <td>{expense.date}</td>
+                                            <td>{expense.title}</td>
+                                            <td>{expense.category}</td>
+                                            <td>{expense.amount}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     )}
                 </main>
