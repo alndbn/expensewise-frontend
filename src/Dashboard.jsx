@@ -68,7 +68,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`
             },
-            body: JSON.stringify({title, amount, category, date, user_id: userId})
+            body: JSON.stringify({title, amount, category, date})
             })
             if(response.ok) {
                 setIsModalOpen(false)
