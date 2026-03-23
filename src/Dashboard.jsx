@@ -2,7 +2,14 @@ import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
-function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
+function Dashboard({
+  username,
+  userId,
+  isLoggedIn,
+  onSignOut,
+  monthlyBudget,
+  onUpdateBudget,
+}) {
   //isLoggedIn, onSignOut props-daten, die von außen eingebettet werden, username/userId kommen vom login
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState("Dashboard");
@@ -17,6 +24,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
   const [isSavingGoalModalOpen, setIsSavingGoalModalOpen] = useState(false);
   const [savingAmount, setSavingAmount] = useState("");
   const [selectedGoalId, setSelectedGoalId] = useState(null);
+  const [newBudget, setNewBudget] = useState("");
 
   const sidebarLinks = [
     "Dashboard",
@@ -90,6 +98,20 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
     if (response.ok) {
       const data = await response.json();
       setSavingGoals(data);
+    }
+  };
+
+  const handleUpdateBudget = async () => {
+    const response = await fetch("/api/users", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify({ monthly_budget: newBudget }),
+    });
+    if (response.ok) {
+      onUpdateBudget(Number(newBudget));
     }
   };
 
@@ -269,6 +291,18 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
                   <button onClick={handleAddSaving}>Save</button>
                 </div>
               )}
+            </div>
+          )}
+          {activePage === "Settings" && (
+            <div>
+              <p>Monthly Budget</p>
+              <input
+                type="number"
+                placeholder="New Budget"
+                value={newBudget}
+                onChange={(e) => setNewBudget(e.target.value)}
+              />
+              <button onClick={handleUpdateBudget}>Save</button>
             </div>
           )}
         </main>

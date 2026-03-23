@@ -1,37 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import Crosshair from "./Crosshair";
-import LandingPage from './LandingPage';
-import Dashboard from './Dashboard';
-
+import LandingPage from "./LandingPage";
+import Dashboard from "./Dashboard";
 
 function ProtectedRoute({ children, isLoggedIn }) {
-        if (!isLoggedIn) {
-            return <Navigate to="/login" />
-        }
-        return children
-     }
-
-
-function PublicRoute({children, isLoggedIn}) {
-    if (isLoggedIn) {
-        return <Navigate to="/dashboard" />
-    }
-    return children
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+  return children;
 }
 
-
+function PublicRoute({ children, isLoggedIn }) {
+  if (isLoggedIn) {
+    return <Navigate to="/dashboard" />;
+  }
+  return children;
+}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [monthlyBudget, setMonthlyBudget] = useState(0);
- 
-  
 
   const handleLoginSuccess = (name, id, monthlyBudget) => {
     setIsLoggedIn(true);
@@ -42,44 +41,48 @@ function App() {
 
   const handleSignOut = () => {
     setIsLoggedIn(false);
-    setUsername('');
+    setUsername("");
     setUserId(null);
   };
 
   useEffect(() => {
-    fetch('/api/me', {
+    fetch("/api/me", {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (response.status === 401) {
-          localStorage.removeItem('access_token')
-          setIsLoading(false)
-          window.location.href="/login"
-          return 
+          localStorage.removeItem("access_token");
+          setIsLoading(false);
+          window.location.href = "/login";
+          return;
         }
         if (response.ok) {
-          return response.json()  
+          return response.json();
         }
       })
-      .then(data => {
+      .then((data) => {
         if (data) {
-          handleLoginSuccess(data.username, data.id, data.monthly_budget) 
+          handleLoginSuccess(data.username, data.id, data.monthly_budget);
         }
-        setIsLoading(false)
-      })
-  }, [])
+        setIsLoading(false);
+      });
+  }, []);
 
-  if (isLoading) return null
+  if (isLoading) return null;
+
+  const handleUpdateBudget = (newBudget) => {
+    setMonthlyBudget(newBudget);
+  };
 
   return (
     <Router>
-      <Crosshair color='#FF0707' />
+      <Crosshair color="#FF0707" />
       <Routes>
-        <Route path='/' element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route
-          path='/login'
+          path="/login"
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
               <LoginForm
@@ -90,7 +93,7 @@ function App() {
           }
         />
         <Route
-          path='/register'
+          path="/register"
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
               <RegisterForm isLoggedIn={isLoggedIn} />
@@ -98,7 +101,7 @@ function App() {
           }
         />
         <Route
-          path='/dashboard'
+          path="/dashboard"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <Dashboard
@@ -107,6 +110,7 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 onSignOut={handleSignOut}
                 monthlyBudget={monthlyBudget}
+                onUpdateBudget={handleUpdateBudget}
               />
             </ProtectedRoute>
           }
