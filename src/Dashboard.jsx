@@ -42,7 +42,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
   };
 
   const fetchSummary = async () => {
-    const response = await fetch(`/api/expenses/user/${userId}/summary`, {
+    const response = await fetch(`/api/expenses/user/summary`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
@@ -55,7 +55,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
   };
 
   const fetchExpenses = async () => {
-    const response = await fetch(`/api/expenses/user/${userId}`, {
+    const response = await fetch(`/api/expenses/user`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
@@ -82,7 +82,7 @@ function Dashboard({ username, userId, isLoggedIn, onSignOut, monthlyBudget }) {
   };
 
   const fetchSavingGoals = async () => {
-    const response = await fetch(`/api/saving-goals/users/${userId}`, {
+    const response = await fetch(`/api/saving-goals/users`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
