@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
+import Transactions from "./Transactions";
 
 function Dashboard({
   username,
@@ -138,12 +139,28 @@ function Dashboard({
       setIsSavingGoalModalOpen(false);
       setSavingAmount("");
       fetchSavingGoals();
+
+      const expenseResponse = await fetch("/api/expenses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+        body: JSON.stringify({
+          title: `Saving: ${goal.title}`,
+          amount: savingAmount,
+          category: "Savings",
+          date: new Date().toISOString().split("T")[0],
+        }),
+      });
+      if (expenseResponse.ok) {
+        fetchSummary();
+      }
     }
   };
 
   return (
     <div className="dashboard-page">
-      {/* HEADER */}
       <header className="dashboard-header">
         <div className="dashboard-logo" onClick={handleLogoClick}>
           ExpenseWise
@@ -153,9 +170,7 @@ function Dashboard({
         </button>
       </header>
 
-      {/* SIDEBAR + CONTENT */}
       <div className="dashboard-body">
-        {/* SIDEBAR */}
         <nav className="dashboard-sidebar">
           {sidebarLinks.map((link) => (
             <span
@@ -168,7 +183,6 @@ function Dashboard({
           ))}
         </nav>
 
-        {/* CONTENT */}
         <main className="dashboard-content">
           {activePage === "Dashboard" && (
             <div>
@@ -184,7 +198,6 @@ function Dashboard({
               </button>
               {isModalOpen && (
                 <div className="modal">
-                  {/* title */}
                   <input
                     type="text"
                     placeholder="Title"
@@ -192,7 +205,6 @@ function Dashboard({
                     onChange={(e) => setTitle(e.target.value)}
                   />
 
-                  {/* amount */}
                   <input
                     type="number"
                     placeholder="Amount"
@@ -200,7 +212,6 @@ function Dashboard({
                     onChange={(e) => setAmount(e.target.value)}
                   />
 
-                  {/* category */}
                   <input
                     type="text"
                     placeholder="Category"
@@ -208,7 +219,6 @@ function Dashboard({
                     onChange={(e) => setCategory(e.target.value)}
                   />
 
-                  {/* date */}
                   <input
                     type="date"
                     value={date}
@@ -221,28 +231,7 @@ function Dashboard({
             </div>
           )}
           {activePage === "Transactions" && (
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {expenses.map((expense) => (
-                    <tr key={expense.id}>
-                      <td>{expense.date}</td>
-                      <td>{expense.title}</td>
-                      <td>{expense.category}</td>
-                      <td>{expense.amount}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <Transactions expenses={expenses} fetchExpenses={fetchExpenses} />
           )}
           {activePage === "Saving Goals" && (
             <div>
