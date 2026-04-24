@@ -11,11 +11,7 @@ function RegisterForm({ isLoggedIn }) {
 
   // Logo-Klick: eingeloggt → Dashboard, sonst → LandingPage
   const handleLogoClick = () => {
-    if (isLoggedIn) {
-      navigate("/dashboard");
-    } else {
-      navigate("/");
-    }
+    navigate("/");
   };
 
   const handleSubmit = async (event) => {

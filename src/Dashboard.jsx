@@ -38,7 +38,7 @@ function Dashboard({
   const handleSignOut = () => {
     localStorage.removeItem("access_token");
     onSignOut();
-    navigate("/");
+    //navigate("/");
   };
 
   // Logo klick: wenn eingeloggt → bleib auf Dashboard, sonst → LandingPage

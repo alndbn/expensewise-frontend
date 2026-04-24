@@ -9,11 +9,7 @@ function LoginForm({ isLoggedIn, onLoginSuccess }) {
   const [error, setError] = useState("");
 
   const handleLogoClick = () => {
-    if (isLoggedIn) {
-      navigate("/dashboard");
-    } else {
-      navigate("/");
-    }
+    navigate("/");
   };
 
   const handleSubmit = async (event) => {

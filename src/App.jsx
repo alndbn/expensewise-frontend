@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,7 +13,7 @@ import Dashboard from "./Dashboard";
 
 function ProtectedRoute({ children, isLoggedIn }) {
   if (!isLoggedIn) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
   return children;
 }
@@ -43,6 +43,7 @@ function App() {
     setIsLoggedIn(false);
     setUsername("");
     setUserId(null);
+    return <Navigate to="/" />;
   };
 
   useEffect(() => {
@@ -80,7 +81,14 @@ function App() {
     <Router>
       <Crosshair color="#FF0707" />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <LandingPage />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/login"
           element={
