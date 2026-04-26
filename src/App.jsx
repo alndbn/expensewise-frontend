@@ -10,6 +10,7 @@ import RegisterForm from "./RegisterForm";
 import Crosshair from "./Crosshair";
 import LandingPage from "./LandingPage";
 import Dashboard from "./Dashboard";
+import Settings from "./Settings";
 
 function ProtectedRoute({ children, isLoggedIn }) {
   if (!isLoggedIn) {
@@ -47,31 +48,32 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("/api/me", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 401) {
-          localStorage.removeItem("access_token");
-          setIsLoading(false);
-          window.location.href = "/login";
-          return;
-        }
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        if (data) {
-          handleLoginSuccess(data.username, data.id, data.monthly_budget);
-        }
-        setIsLoading(false);
+    const checkAuth = async () => {
+      const response = await fetch("/api/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
       });
+
+      if (response.status === 401) {
+        localStorage.removeItem("access_token");
+        setIsLoading(false);
+        window.location.href = "/login";
+        return;
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        handleLoginSuccess(data.username, data.id, data.monthly_budget);
+      }
+
+      setIsLoading(false);
+    };
+
+    checkAuth();
   }, []);
 
-  if (isLoading) return null;
+  if (isLoading) return <div style={{ cursor: "wait" }} />;
 
   const handleUpdateBudget = (newBudget) => {
     setMonthlyBudget(newBudget);
