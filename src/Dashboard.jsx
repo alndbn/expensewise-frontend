@@ -6,25 +6,28 @@ import Settings from "./Settings";
 import SavingGoals from "./SavingGoals";
 import DashboardHome from "./DashboardHome";
 
-function Dashboard({
+export default function Dashboard({
   username,
   userId,
   isLoggedIn,
   onSignOut,
   monthlyBudget,
   onUpdateBudget,
+  onToggleCrosshair,
+  crosshairEnabled,
 }) {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState("Dashboard");
   const [summary, setSummary] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [newBudget, setNewBudget] = useState("");
+  //console.log("expenses: ", expenses);
 
   const sidebarLinks = [
     "Dashboard",
     "Transactions",
     "Saving Goals",
-    "Receipts",
+    //"Receipts",
     "Settings",
   ];
 
@@ -82,9 +85,12 @@ function Dashboard({
   };
 
   useEffect(() => {
-    fetchSummary();
     fetchExpenses();
   }, []);
+
+  useEffect(() => {
+    fetchSummary();
+  }, [expenses]);
 
   return (
     <div className="dashboard-page">
@@ -126,12 +132,14 @@ function Dashboard({
             <SavingGoals fetchSummary={fetchSummary} />
           )}
           {activePage === "Settings" && (
-            <Settings onUpdateBudget={onUpdateBudget} />
+            <Settings
+              onUpdateBudget={onUpdateBudget}
+              onToggleCrosshair={onToggleCrosshair}
+              crosshairEnabled={crosshairEnabled}
+            />
           )}
         </main>
       </div>
     </div>
   );
 }
-
-export default Dashboard;

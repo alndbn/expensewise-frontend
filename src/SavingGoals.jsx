@@ -6,6 +6,11 @@ export default function SavingGoals({ fetchSummary }) {
   const [isSavingGoalModalOpen, setIsSavingGoalModalOpen] = useState(false);
   const [savingAmount, setSavingAmount] = useState("");
 
+  const [isNewGoalModalOpen, setIsNewGoalModalOpen] = useState(false);
+  const [newGoalTitle, setNewGoalTitle] = useState("");
+  const [newGoalTarget, setNewGoalTarget] = useState("");
+  const [newGoalDeadline, setNewGoalDeadline] = useState("");
+
   const fetchSavingGoals = async () => {
     const response = await fetch(`/api/saving-goals/users`, {
       headers: {
@@ -18,9 +23,32 @@ export default function SavingGoals({ fetchSummary }) {
     }
   };
 
+  const handleCreateGoal = async () => {
+    const response = await fetch("/api/saving-goals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify({
+        title: newGoalTitle,
+        target_amount: Number(newGoalTarget),
+        current_amount: 0,
+        deadline: newGoalDeadline,
+      }),
+    });
+    if (response.ok) {
+      setIsNewGoalModalOpen(false);
+      setNewGoalTitle("");
+      setNewGoalTarget("");
+      setNewGoalDeadline("");
+      fetchSavingGoals();
+    }
+  };
+
   const handleAddSaving = async () => {
     const goal = savingGoals.find((goal) => goal.id === selectedGoalId);
-    const newAmount = goal.current_amount + Number(savingAmount);
+    const newAmount = Number(goal.current_amount) + Number(savingAmount);
 
     const response = await fetch(`/api/saving-goals/${selectedGoalId}`, {
       method: "PUT",
@@ -53,28 +81,6 @@ export default function SavingGoals({ fetchSummary }) {
         fetchSummary();
       }
     }
-    if (response.ok) {
-      setIsSavingGoalModalOpen(false);
-      setSavingAmount("");
-      fetchSavingGoals();
-
-      const expenseResponse = await fetch("/api/expenses", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-        body: JSON.stringify({
-          title: `Saving: ${goal.title}`,
-          amount: savingAmount,
-          category: "Savings",
-          date: new Date().toISOString().split("T")[0],
-        }),
-      });
-      if (expenseResponse.ok) {
-        fetchSummary();
-      }
-    }
   };
 
   useEffect(() => {
@@ -83,6 +89,10 @@ export default function SavingGoals({ fetchSummary }) {
 
   return (
     <div>
+      <button onClick={() => setIsNewGoalModalOpen(true)}>
+        [ + New Goal ]
+      </button>
+
       <table>
         <thead>
           <tr>
@@ -114,6 +124,8 @@ export default function SavingGoals({ fetchSummary }) {
           ))}
         </tbody>
       </table>
+
+      {/* Modal: Betrag zu bestehendem Goal hinzufügen */}
       {isSavingGoalModalOpen && (
         <div className="modal">
           <input
@@ -126,6 +138,31 @@ export default function SavingGoals({ fetchSummary }) {
             Cancel
           </button>
           <button onClick={handleAddSaving}>Save</button>
+        </div>
+      )}
+
+      {/* Modal: Neues Goal erstellen */}
+      {isNewGoalModalOpen && (
+        <div className="modal">
+          <input
+            type="text"
+            placeholder="Title"
+            value={newGoalTitle}
+            onChange={(e) => setNewGoalTitle(e.target.value)}
+          />
+          <input
+            type="number"
+            placeholder="Target Amount"
+            value={newGoalTarget}
+            onChange={(e) => setNewGoalTarget(e.target.value)}
+          />
+          <input
+            type="date"
+            value={newGoalDeadline}
+            onChange={(e) => setNewGoalDeadline(e.target.value)}
+          />
+          <button onClick={() => setIsNewGoalModalOpen(false)}>Cancel</button>
+          <button onClick={handleCreateGoal}>Create</button>
         </div>
       )}
     </div>

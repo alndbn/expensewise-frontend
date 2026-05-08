@@ -1,103 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 /* ================================================
-   NOTIZBUCH-SEITE
-   Wird verwendet von: LandingPage, LoginForm, RegisterForm und später noch von anderen
+   NOTIZBUCH-SEITE — Raster: 35px
    ================================================ */
 
 .landing-page {
-    min-height: 100vh;
-    width: 100%;
-    background-color: #E7E4D7;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #e7e4d7;
 
-    /* Horizontale Notizbuchlinien */
-    background-image: linear-gradient(#d1cfc0 1px, transparent 1px);
-    background-size: 100% 35px;
+  background-image: linear-gradient(#d1cfc0 1px, transparent 1px);
+  background-size: 100% 35px;
+  background-position: 0 0;
 
-    font-family: 'JetBrains Mono', monospace;
-    color: rgba(0, 0, 0, 0.6);
+  font-family: "JetBrains Mono", monospace;
+  color: rgba(0, 0, 0, 0.6);
 
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
 }
 
-/* Linke rote vertikale Linie */
 .landing-page::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 220px;
-    width: 1px;
-    background-color: rgba(220, 50, 50, 0.5);
-    pointer-events: none;
-    z-index: 10;
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 220px;
+  width: 1px;
+  background-color: rgba(220, 50, 50, 0.5);
+  pointer-events: none;
+  z-index: 10;
 }
 
-/* Rechte graue vertikale Linie */
 .landing-page::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 40px;
-    width: 1px;
-    background-color: rgba(0, 0, 0, 0.12);
-    pointer-events: none;
-    z-index: 10;
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 40px;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  z-index: 10;
 }
 
 /* ================================================
-   HEADER — Logo links oben
+   HEADER
    ================================================ */
 
 .header {
-    width: 100%;
-    padding: 25px 40px 10px 20px;
-    display: flex;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    border-bottom: 1px solid rgba(220, 50, 50, 0.4);
+  width: 100%;
+  padding: 25px 40px 10px 20px;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(220, 50, 50, 0.4);
 }
 
 .logo {
-    font-family: 'Inter', monospace;
-    color: #FF0707;
-    font-weight: bold;
-    font-size: 40px;
-    cursor: pointer;
-    user-select: none;
+  font-family: "Inter", sans-serif;
+  color: #ff0707;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 35px;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* ================================================
-   HAUPTINHALT — zentriert für LandingPage
+   HAUPTINHALT
    ================================================ */
 
 .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 60px 20px 60px 20px;
-    box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 20px 60px 20px;
+  box-sizing: border-box;
 }
 
 h1 {
-    font-size: 32px;
-    color: rgba(0, 0, 0, 0.75);
-    margin-bottom: 20px;
-    line-height: 35px;
+  font-size: 42px; /* vorher 32px */
+  color: rgba(0, 0, 0, 0.75);
+  margin-bottom: 20px;
+  line-height: 70px; /* 2 × 35px für den größeren Text */
 }
 
 .subtitle {
-    font-size: 15px;
-    line-height: 35px;
-    margin-bottom: 50px;
-    max-width: 700px;
+  font-size: 17px; /* vorher 15px */
+  line-height: 35px;
+  margin-bottom: 50px;
+  max-width: 700px;
 }
 
 /* ================================================
@@ -105,24 +103,19 @@ h1 {
    ================================================ */
 
 .features-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 40px 0;
-    width: 100%;
-    max-width: 700px;
-    text-align: left;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+  width: 100%;
+  max-width: 700px;
+  text-align: left;
 }
 
 .features-list li {
-    font-size: 15px;
-    line-height: 35px;
-    padding: 10px 5px;
-    border-bottom: 1px solid #d1cfc0;
-    white-space: nowrap;
-}
-
-.features-list li:first-child {
-    border-top: 1px solid #d1cfc0;
+  font-size: 16px; /* vorher 15px */
+  line-height: 35px;
+  padding: 0 5px;
+  white-space: nowrap;
 }
 
 /* ================================================
@@ -130,76 +123,76 @@ h1 {
    ================================================ */
 
 .cta-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 }
 
 .btn-get-started,
 .btn-login {
-    background: none;
-    border: none;
-    color: #FF0707;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 20px;
-    line-height: 35px;
-    text-decoration: none;
-    cursor: pointer;
+  background: none;
+  border: none;
+  color: #ff0707;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 22px; /* vorher 20px */
+  line-height: 35px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .btn-get-started:hover,
 .btn-login:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 /* ================================================
-   FORMULAR — für Login & Register
+   FORMULAR
    ================================================ */
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    max-width: 400px;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
 }
 
 form label {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.6);
-    display: block;
-    margin-bottom: 4px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  display: block;
+  margin-bottom: 4px;
 }
 
 form input {
-    width: 100%;
-    background-color: #ffffff;
-    border: 1px solid #d1cfc0;
-    padding: 10px 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #d1cfc0;
+  padding: 10px 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 form button[type="submit"] {
-    background-color: #FF0707;
-    color: white;
-    border: none;
-    padding: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-    cursor: pointer;
-    width: 100%;
+  background-color: #ff0707;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
 }
 
 form button[type="submit"]:hover {
-    opacity: 0.85;
+  opacity: 0.85;
 }
 
 @media (max-width: 768px) {
-    .features-list li {
-        white-space: normal; /* Zeilenumbruch wieder erlaubt */
-    }
+  .features-list li {
+    white-space: normal;
+  }
 }

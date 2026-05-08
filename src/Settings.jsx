@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function Settings({ onUpdateBudget }) {
+export default function Settings({
+  onUpdateBudget,
+  onToggleCrosshair,
+  crosshairEnabled,
+}) {
   const [newBudget, setNewBudget] = useState("");
 
   const handleUpdateBudget = async () => {
@@ -27,6 +31,11 @@ export default function Settings({ onUpdateBudget }) {
         onChange={(e) => setNewBudget(e.target.value)}
       />
       <button onClick={handleUpdateBudget}>Save</button>
+
+      <p>Crosshair</p>
+      <button onClick={onToggleCrosshair}>
+        {crosshairEnabled ? "[ On ]" : "[ Off ]"}
+      </button>
     </div>
   );
 }

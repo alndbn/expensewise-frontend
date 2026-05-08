@@ -10,19 +10,14 @@ import RegisterForm from "./RegisterForm";
 import Crosshair from "./Crosshair";
 import LandingPage from "./LandingPage";
 import Dashboard from "./Dashboard";
-import Settings from "./Settings";
 
 function ProtectedRoute({ children, isLoggedIn }) {
-  if (!isLoggedIn) {
-    return <Navigate to="/" />;
-  }
+  if (!isLoggedIn) return <Navigate to="/" />;
   return children;
 }
 
 function PublicRoute({ children, isLoggedIn }) {
-  if (isLoggedIn) {
-    return <Navigate to="/dashboard" />;
-  }
+  if (isLoggedIn) return <Navigate to="/dashboard" />;
   return children;
 }
 
@@ -32,6 +27,9 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [monthlyBudget, setMonthlyBudget] = useState(0);
+  const [crosshairEnabled, setCrosshairEnabled] = useState(
+    () => localStorage.getItem("crosshair") !== "false",
+  );
 
   const handleLoginSuccess = (name, id, monthlyBudget) => {
     setIsLoggedIn(true);
@@ -45,6 +43,18 @@ function App() {
     setUsername("");
     setUserId(null);
     return <Navigate to="/" />;
+  };
+
+  const handleUpdateBudget = (newBudget) => {
+    setMonthlyBudget(newBudget);
+  };
+
+  const handleToggleCrosshair = () => {
+    setCrosshairEnabled((prev) => {
+      const newValue = !prev;
+      localStorage.setItem("crosshair", String(newValue));
+      return newValue;
+    });
   };
 
   useEffect(() => {
@@ -75,13 +85,9 @@ function App() {
 
   if (isLoading) return <div style={{ cursor: "wait" }} />;
 
-  const handleUpdateBudget = (newBudget) => {
-    setMonthlyBudget(newBudget);
-  };
-
   return (
     <Router>
-      <Crosshair color="#FF0707" />
+      {crosshairEnabled && <Crosshair color="#FF0707" />}
       <Routes>
         <Route
           path="/"
@@ -121,6 +127,8 @@ function App() {
                 onSignOut={handleSignOut}
                 monthlyBudget={monthlyBudget}
                 onUpdateBudget={handleUpdateBudget}
+                crosshairEnabled={crosshairEnabled}
+                onToggleCrosshair={handleToggleCrosshair}
               />
             </ProtectedRoute>
           }
