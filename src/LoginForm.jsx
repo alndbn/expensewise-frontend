@@ -46,7 +46,6 @@ function LoginForm({ isLoggedIn, onLoginSuccess }) {
   }, []);
 
   return (
-    //return = Teil, welchen der User sieht
     <div className="landing-page">
       <header className="header">
         <div className="logo" onClick={handleLogoClick}>

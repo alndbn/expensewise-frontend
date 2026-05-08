@@ -6,6 +6,7 @@ export default function Settings({
   crosshairEnabled,
 }) {
   const [newBudget, setNewBudget] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // NEU
 
   const handleUpdateBudget = async () => {
     const response = await fetch("/api/users", {
@@ -18,6 +19,8 @@ export default function Settings({
     });
     if (response.ok) {
       onUpdateBudget(Number(newBudget));
+      setSuccessMessage("Budget successfully updated! ✓"); // NEU
+      setTimeout(() => setSuccessMessage(""), 3000); // NEU
     }
   };
 
@@ -31,7 +34,10 @@ export default function Settings({
         onChange={(e) => setNewBudget(e.target.value)}
       />
       <button onClick={handleUpdateBudget}>Save</button>
-
+      {successMessage && (
+        <p style={{ color: "green" }}>{successMessage}</p>
+      )}{" "}
+      {/* NEU */}
       <p>Crosshair</p>
       <button onClick={onToggleCrosshair}>
         {crosshairEnabled ? "[ On ]" : "[ Off ]"}

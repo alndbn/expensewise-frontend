@@ -314,3 +314,68 @@
 .dashboard-content > div > button + p {
   margin-top: 70px;
 }
+
+/* ================================================
+   MODAL
+   ================================================ */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #e7e4d7;
+  border: 1px solid rgba(220, 50, 50, 0.4);
+  padding: 70px 60px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 400px;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.modal input,
+.modal select {
+  height: 35px;
+  border: 1px solid #d1cfc0;
+  background-color: #ffffff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  padding: 0 12px;
+  color: rgba(0, 0, 0, 0.8);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+}
+
+.modal button {
+  height: 35px;
+  background: none;
+  border: 1px solid #d1cfc0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0 16px;
+}
+
+.modal button:last-child {
+  border-color: rgba(220, 50, 50, 0.5);
+  color: #ff0707;
+}
+
+.modal button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.modal button:last-child:hover {
+  background-color: rgba(220, 50, 50, 0.08);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 99;
+}

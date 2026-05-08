@@ -25,7 +25,7 @@ export default function Dashboard({
 
   const sidebarLinks = [
     "Dashboard",
-    "Transactions",
+    //"Transactions",
     "Saving Goals",
     //"Receipts",
     "Settings",
@@ -52,7 +52,7 @@ export default function Dashboard({
     });
     if (response.ok) {
       const data = await response.json();
-      console.log("haaaaalllooo", data);
+      //console.log("haaaaalllooo", data);
       setSummary(data);
     }
   };
@@ -81,6 +81,7 @@ export default function Dashboard({
     if (response.ok) {
       setIsModalOpen(false);
       fetchSummary();
+      fetchExpenses();
     }
   };
 
@@ -118,12 +119,16 @@ export default function Dashboard({
 
         <main className="dashboard-content">
           {activePage === "Dashboard" && (
-            <DashboardHome
-              username={username}
-              monthlyBudget={monthlyBudget}
-              summary={summary}
-              fetchSummary={fetchSummary}
-            />
+            <>
+              <DashboardHome
+                username={username}
+                monthlyBudget={monthlyBudget}
+                summary={summary}
+                fetchSummary={fetchSummary}
+                fetchExpenses={fetchExpenses}
+              />
+              <Transactions expenses={expenses} fetchExpenses={fetchExpenses} />
+            </>
           )}
           {activePage === "Transactions" && (
             <Transactions expenses={expenses} fetchExpenses={fetchExpenses} />

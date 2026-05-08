@@ -112,7 +112,10 @@ function App() {
           path="/register"
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
-              <RegisterForm isLoggedIn={isLoggedIn} />
+              <RegisterForm
+                isLoggedIn={isLoggedIn}
+                onLoginSuccess={handleLoginSuccess}
+              />
             </PublicRoute>
           }
         />

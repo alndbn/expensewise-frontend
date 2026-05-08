@@ -1,10 +1,13 @@
 import { useState } from "react";
 
+const CATEGORIES = ["Groceries", "Transport", "Health", "Savings", "Other"];
+
 export default function Transactions({ expenses, fetchExpenses }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterMonths, setFilterMonths] = useState("all");
+
   const filteredExpenses = expenses
     .filter((expense) =>
       expense.title.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -24,13 +27,12 @@ export default function Transactions({ expenses, fetchExpenses }) {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
     });
-
     if (response.ok) {
       fetchExpenses();
     }
   };
-  const handleEditExpense = async (expenses_id) => {
-    console.log(selectedExpense);
+
+  const handleEditExpense = async () => {
     const response = await fetch(`/api/expenses/${selectedExpense.id}`, {
       method: "PUT",
       headers: {
@@ -44,7 +46,6 @@ export default function Transactions({ expenses, fetchExpenses }) {
         date: selectedExpense.date,
       }),
     });
-
     if (response.ok) {
       setIsEditModalOpen(false);
       fetchExpenses();
@@ -68,6 +69,7 @@ export default function Transactions({ expenses, fetchExpenses }) {
         <option value="6">Last 6 months</option>
         <option value="12">Last 12 months</option>
       </select>
+
       <table>
         <thead>
           <tr>
@@ -102,46 +104,62 @@ export default function Transactions({ expenses, fetchExpenses }) {
           ))}
         </tbody>
       </table>
+
       {isEditModalOpen && (
-        <div className="modal">
-          <input
-            type="text"
-            placeholder="Title"
-            value={selectedExpense.title}
-            onChange={(e) =>
-              setSelectedExpense({ ...selectedExpense, title: e.target.value })
-            }
+        <>
+          <div
+            className="modal-backdrop"
+            onClick={() => setIsEditModalOpen(false)}
           />
-          <input
-            type="number"
-            placeholder="Amount"
-            value={selectedExpense.amount}
-            onChange={(e) =>
-              setSelectedExpense({ ...selectedExpense, amount: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Category"
-            value={selectedExpense.category}
-            onChange={(e) =>
-              setSelectedExpense({
-                ...selectedExpense,
-                category: e.target.value,
-              })
-            }
-          />
-          <input
-            type="date"
-            placeholder="Date"
-            value={selectedExpense.date}
-            onChange={(e) =>
-              setSelectedExpense({ ...selectedExpense, date: e.target.value })
-            }
-          />
-          <button onClick={() => setIsEditModalOpen(false)}>Cancel</button>
-          <button onClick={handleEditExpense}>Save</button>
-        </div>
+          <div className="modal">
+            <input
+              type="text"
+              placeholder="Title"
+              value={selectedExpense.title}
+              onChange={(e) =>
+                setSelectedExpense({
+                  ...selectedExpense,
+                  title: e.target.value,
+                })
+              }
+            />
+            <input
+              type="number"
+              placeholder="Amount"
+              value={selectedExpense.amount}
+              onChange={(e) =>
+                setSelectedExpense({
+                  ...selectedExpense,
+                  amount: e.target.value,
+                })
+              }
+            />
+            <select
+              value={selectedExpense.category}
+              onChange={(e) =>
+                setSelectedExpense({
+                  ...selectedExpense,
+                  category: e.target.value,
+                })
+              }
+            >
+              {CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+            <input
+              type="date"
+              value={selectedExpense.date}
+              onChange={(e) =>
+                setSelectedExpense({ ...selectedExpense, date: e.target.value })
+              }
+            />
+            <button onClick={() => setIsEditModalOpen(false)}>Cancel</button>
+            <button onClick={handleEditExpense}>Save</button>
+          </div>
+        </>
       )}
     </div>
   );
