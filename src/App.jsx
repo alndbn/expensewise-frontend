@@ -10,6 +10,7 @@ import RegisterForm from "./RegisterForm";
 import Crosshair from "./Crosshair";
 import LandingPage from "./LandingPage";
 import Dashboard from "./Dashboard";
+import { apiFetch } from "./utils/api";
 
 function ProtectedRoute({ children, isLoggedIn }) {
   if (!isLoggedIn) return <Navigate to="/" />;
@@ -59,7 +60,7 @@ function App() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const response = await fetch("/api/me", {
+      const response = await apiFetch("/api/me", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },

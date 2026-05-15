@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "./utils/api";
 
 export default function DashboardHome({
   username,
@@ -15,7 +16,7 @@ export default function DashboardHome({
   const CATEGORIES = ["Groceries", "Transport", "Health", "Savings", "Other"];
 
   const handleSaveExpenses = async () => {
-    const response = await fetch("/api/expenses", {
+    const response = await apiFetch("/api/expenses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

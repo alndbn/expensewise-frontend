@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "./utils/api";
 
 export default function Settings({
   onUpdateBudget,
@@ -9,7 +10,7 @@ export default function Settings({
   const [successMessage, setSuccessMessage] = useState(""); // NEU
 
   const handleUpdateBudget = async () => {
-    const response = await fetch("/api/users", {
+    const response = await apiFetch("/api/users", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

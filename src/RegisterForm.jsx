@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
+import { apiFetch } from "./utils/api";
 
 function RegisterForm({ isLoggedIn, onLoginSuccess }) {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function RegisterForm({ isLoggedIn, onLoginSuccess }) {
       return;
     }
     try {
-      const response = await fetch("/api/register", {
+      const response = await apiFetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),

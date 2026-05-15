@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { apiFetch } from "./utils/api";
 
 export default function SavingGoals({ fetchSummary }) {
   const [savingGoals, setSavingGoals] = useState([]);
@@ -12,7 +13,7 @@ export default function SavingGoals({ fetchSummary }) {
   const [newGoalDeadline, setNewGoalDeadline] = useState("");
 
   const fetchSavingGoals = async () => {
-    const response = await fetch(`/api/saving-goals/users`, {
+    const response = await apiFetch(`/api/saving-goals/users`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
@@ -24,7 +25,7 @@ export default function SavingGoals({ fetchSummary }) {
   };
 
   const handleCreateGoal = async () => {
-    const response = await fetch("/api/saving-goals", {
+    const response = await apiFetch("/api/saving-goals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +51,7 @@ export default function SavingGoals({ fetchSummary }) {
     const goal = savingGoals.find((goal) => goal.id === selectedGoalId);
     const newAmount = Number(goal.current_amount) + Number(savingAmount);
 
-    const response = await fetch(`/api/saving-goals/${selectedGoalId}`, {
+    const response = await apiFetch(`/api/saving-goals/${selectedGoalId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "./utils/api";
 
 const CATEGORIES = ["Groceries", "Transport", "Health", "Savings", "Other"];
 
@@ -20,7 +21,7 @@ export default function Transactions({ expenses, fetchExpenses }) {
     });
 
   const handleDeleteExpenses = async (expense_id) => {
-    const response = await fetch(`/api/expenses/${expense_id}`, {
+    const response = await apiFetch(`/api/expenses/${expense_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +34,7 @@ export default function Transactions({ expenses, fetchExpenses }) {
   };
 
   const handleEditExpense = async () => {
-    const response = await fetch(`/api/expenses/${selectedExpense.id}`, {
+    const response = await apiFetch(`/api/expenses/${selectedExpense.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

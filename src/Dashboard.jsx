@@ -5,6 +5,7 @@ import Transactions from "./Transactions";
 import Settings from "./Settings";
 import SavingGoals from "./SavingGoals";
 import DashboardHome from "./DashboardHome";
+import { apiFetch } from "./utils/api";
 
 export default function Dashboard({
   username,
@@ -45,7 +46,7 @@ export default function Dashboard({
   };
 
   const fetchSummary = async () => {
-    const response = await fetch(`/api/expenses/user/summary`, {
+    const response = await apiFetch(`/api/expenses/user/summary`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
@@ -58,7 +59,7 @@ export default function Dashboard({
   };
 
   const fetchExpenses = async () => {
-    const response = await fetch(`/api/expenses/user`, {
+    const response = await apiFetch(`/api/expenses/user`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
@@ -70,7 +71,7 @@ export default function Dashboard({
   };
 
   const handleSaveExpenses = async () => {
-    const response = await fetch("/api/expenses", {
+    const response = await apiFetch("/api/expenses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
