@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LandingPage.css"; // Notizbuch-Hintergrund wiederverwenden
+import "./LandingPage.css";
+import { apiFetch } from "./utils/api";
 
-function RegisterForm({ isLoggedIn }) {
+function RegisterForm({ isLoggedIn, onLoginSuccess }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +23,7 @@ function RegisterForm({ isLoggedIn }) {
       return;
     }
     try {
-      const response = await fetch("/api/register", {
+      const response = await apiFetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
@@ -33,8 +34,12 @@ function RegisterForm({ isLoggedIn }) {
         return;
       }
       const data = await response.json();
-      console.log("Success:", data);
+      console.log("Register response:", data);
+      localStorage.setItem("access_token", data.access_token);
+      onLoginSuccess(data.username, data.id, data.monthly_budget);
+      navigate("/dashboard");
     } catch (error) {
+      console.log("CATCH ERROR:", error);
       setError("Connection to server failed.");
     }
   };

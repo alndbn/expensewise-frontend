@@ -33,10 +33,6 @@ function LandingPage() {
             way with personalized categories.
           </li>
           <li>
-            <strong>Data Visualization:</strong> Beautiful charts that actually
-            make sense of your numbers.
-          </li>
-          <li>
             <strong>Set Monthly Budgets:</strong> Define your limits and get
             notified before you overspend.
           </li>

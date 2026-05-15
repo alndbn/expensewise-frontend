@@ -1,13 +1,16 @@
-/* absolutes Minimum — kein Layout, keine Linien, kein Styling hier */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   min-height: 100vh;
   width: 100%;
-  background-color: #E7E4D7;
-  font-family: 'JetBrains Mono', monospace;
+  background-color: #e7e4d7;
+  font-family: "JetBrains Mono", monospace;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
+import { apiFetch } from "./utils/api";
 
 function LoginForm({ isLoggedIn, onLoginSuccess }) {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function LoginForm({ isLoggedIn, onLoginSuccess }) {
     //handleSubmit wird aufgerufen wenn user auf login klickt und schickt Daten ans Backend
     event.preventDefault();
     try {
-      const response = await fetch("/api/login", {
+      const response = await apiFetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -46,7 +47,6 @@ function LoginForm({ isLoggedIn, onLoginSuccess }) {
   }, []);
 
   return (
-    //return = Teil, welchen der User sieht
     <div className="landing-page">
       <header className="header">
         <div className="logo" onClick={handleLogoClick}>

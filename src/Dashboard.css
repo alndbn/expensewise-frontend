@@ -1,51 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 /* ================================================
-   DASHBOARD SEITE
+   DASHBOARD SEITE — Raster: 35px
    ================================================ */
 
 .dashboard-page {
-    font-family: 'JetBrains Mono', monospace;
-    color: rgba(0, 0, 0, 0.6);
-    min-height: 100vh;
-    width: 100%;
-    background-color: #E7E4D7;
+  font-family: "JetBrains Mono", monospace;
+  color: rgba(0, 0, 0, 0.6);
+  min-height: 100vh;
+  width: 100%;
+  background-color: #e7e4d7;
 
-    /* Horizontale Notizbuchlinien */
-    background-image: linear-gradient(#d1cfc0 1px, transparent 1px);
-    background-size: 100% 35px;
+  background-image: linear-gradient(#d1cfc0 1px, transparent 1px);
+  background-size: 100% 35px;
+  background-position: 0 0;
 
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
 }
 
-/* Rote Linie — trennt Sidebar vom Content */
 .dashboard-page::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 220px;
-    width: 1px;
-    background-color: rgba(220, 50, 50, 0.5);
-    pointer-events: none;
-    z-index: 10;
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 220px;
+  width: 1px;
+  background-color: rgba(220, 50, 50, 0.5);
+  pointer-events: none;
+  z-index: 10;
 }
 
-/* Rechte graue Linie */
 .dashboard-page::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 40px;
-    width: 1px;
-    background-color: rgba(0, 0, 0, 0.12);
-    pointer-events: none;
-    z-index: 10;
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 40px;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  z-index: 10;
 }
 
 /* ================================================
@@ -53,128 +51,331 @@
    ================================================ */
 
 .dashboard-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 60px 10px 20px;
-    box-sizing: border-box;
-    border-bottom: 1px solid rgba(220, 50, 50, 0.4);
-    z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 25px 60px 0 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(220, 50, 50, 0.4);
+  z-index: 2;
 }
 
 .dashboard-logo {
-    color: #FF0707;
-    background: none;
-    border: none;
-    font-family: 'Inter', monospace;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
+  color: #ff0707;
+  background: none;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 35px;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 0 10px 0;
 }
 
 .dashboard-signout {
-    background: none;
-    border: none;
-    font-family: 'Inter', monospace !important;
-    font-size: 40px !important;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.75) !important;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 35px;
+  color: rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  padding: 0 0 10px 0;
 }
 
 .dashboard-signout:hover {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 
 /* ================================================
-   BODY: Sidebar + Content nebeneinander
+   BODY
    ================================================ */
 
 .dashboard-body {
-    display: flex;
-    flex: 1;
-    z-index: 2;
+  display: flex;
+  flex: 1;
+  z-index: 2;
 }
 
 /* ================================================
-   SIDEBAR — genau 220px, bis zur roten Linie
+   SIDEBAR
    ================================================ */
 
 .dashboard-sidebar {
-    width: 220px;
-    min-width: 220px;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+  width: 220px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .sidebar-link {
-    font-size: 20px;
-    line-height: 35px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    color: rgba(0, 0, 0, 0.6);
-    text-decoration: none;
-    border-bottom: 1px solid #d1cfc0;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.sidebar-link:first-child {
-    border-top: 1px solid #d1cfc0;
+  font-size: 20px;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 0 8px 20px;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  border-bottom: 1px solid #d1cfc0;
+  cursor: pointer;
+  transition: color 0.2s;
+  box-sizing: border-box;
 }
 
 .sidebar-link.active,
 .sidebar-link:hover {
-    color: #FF0707;
+  color: #ff0707;
 }
 
 /* ================================================
-   CONTENT — rechts von der Sidebar
+   CONTENT
    ================================================ */
 
 .dashboard-content {
-    flex: 1;
-    padding: 35px 60px 0 30px;
-    box-sizing: border-box;
+  flex: 1;
+  padding: 35px 60px 70px 30px;
+  box-sizing: border-box;
 }
 
 .dashboard-greeting {
-    color: #FF0707;
-    font-size: 17px;
-    line-height: 35px;
-    margin: 0 0 35px 0;
+  color: #ff0707;
+  font-size: 17px;
+  line-height: 35px;
+  margin: 0 0 35px 0;
 }
 
-.dashboard-greeting::before { content: "[ "; }
-.dashboard-greeting::after  { content: " ]"; }
+.dashboard-greeting::before {
+  content: "[ ";
+}
+.dashboard-greeting::after {
+  content: " ]";
+}
 
 .dashboard-balance {
-    font-size: 20px;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.75);
-    line-height: 35px;
-    margin: 0 0 70px 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.75);
+  line-height: 35px;
+  margin: 0 0 70px 0;
 }
 
 .btn-add-expenses {
-    background: none;
-    border: none;
-    color: #FF0707;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 17px;
-    cursor: pointer;
-    line-height: 35px;
-    padding: 0;
+  background: none;
+  border: none;
+  color: #ff0707;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 17px;
+  cursor: pointer;
+  line-height: 35px;
+  padding: 0;
 }
 
-.btn-add-expenses::before { content: "[ "; }
-.btn-add-expenses::after  { content: " ]"; }
-
+.btn-add-expenses::before {
+  content: "[ ";
+}
+.btn-add-expenses::after {
+  content: " ]";
+}
 .btn-add-expenses:hover {
-    opacity: 0.7;
+  opacity: 0.7;
+}
+
+/* ================================================
+   SETTINGS
+   <p>  → Label auf einer Rasterlinie
+   <input> → eine Rasterzelle hoch
+   <button> → im Stil der App
+   ================================================ */
+
+.dashboard-content > div > p {
+  font-size: 17px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.75);
+  line-height: 35px;
+  margin: 0 0 35px 0; /* eine Rasterlinie Abstand nach unten */
+}
+
+.dashboard-content > div > input[type="number"] {
+  height: 35px;
+  width: 200px;
+  border: 1px solid #d1cfc0;
+  background-color: #ffffff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 15px;
+  padding: 0 12px;
+  color: rgba(0, 0, 0, 0.8);
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.dashboard-content > div > button {
+  background: none;
+  border: 1px solid rgba(220, 50, 50, 0.5);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 15px;
+  color: #ff0707;
+  cursor: pointer;
+  height: 35px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.dashboard-content > div > button:hover {
+  background-color: rgba(220, 50, 50, 0.08);
+}
+
+/* ================================================
+   TABELLEN — nackte <table> Selektoren
+   ================================================ */
+
+.dashboard-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.dashboard-content table th {
+  height: 35px;
+  line-height: 35px;
+  text-align: left;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.75);
+  padding: 0 20px 0 0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-content table td {
+  height: 70px;
+  line-height: 35px;
+  padding: 0 20px 0 0;
+  border-bottom: 1px solid #d1cfc0;
+  vertical-align: middle;
+}
+
+.dashboard-content table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ================================================
+   BUTTONS in Tabellen (Edit / Delete / +Add)
+   ================================================ */
+
+.dashboard-content table button {
+  background: none;
+  border: 1px solid #d1cfc0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 10px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-right: 6px;
+}
+
+.dashboard-content table td:last-child button:last-child {
+  color: #ff0707;
+  border-color: rgba(220, 50, 50, 0.4);
+}
+
+.dashboard-content table button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-content table td:last-child button:last-child:hover {
+  background-color: rgba(220, 50, 50, 0.08);
+}
+
+/* ================================================
+   SEARCH & FILTER (Transactions)
+   ================================================ */
+
+.dashboard-content input[type="text"],
+.dashboard-content select {
+  height: 35px;
+  border: 1px solid #d1cfc0;
+  background-color: #ffffff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  padding: 0 10px;
+  color: rgba(0, 0, 0, 0.8);
+  box-sizing: border-box;
+  margin-right: 10px;
+  margin-bottom: 35px;
+}
+.dashboard-content > div > p + input,
+.dashboard-content > div > p + button {
+  margin-top: 0;
+}
+
+.dashboard-content > div > button + p {
+  margin-top: 70px;
+}
+
+/* ================================================
+   MODAL
+   ================================================ */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #e7e4d7;
+  border: 1px solid rgba(220, 50, 50, 0.4);
+  padding: 70px 60px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 400px;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.modal input,
+.modal select {
+  height: 35px;
+  border: 1px solid #d1cfc0;
+  background-color: #ffffff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  padding: 0 12px;
+  color: rgba(0, 0, 0, 0.8);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+}
+
+.modal button {
+  height: 35px;
+  background: none;
+  border: 1px solid #d1cfc0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0 16px;
+}
+
+.modal button:last-child {
+  border-color: rgba(220, 50, 50, 0.5);
+  color: #ff0707;
+}
+
+.modal button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.modal button:last-child:hover {
+  background-color: rgba(220, 50, 50, 0.08);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 99;
 }

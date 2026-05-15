@@ -10,18 +10,15 @@ import RegisterForm from "./RegisterForm";
 import Crosshair from "./Crosshair";
 import LandingPage from "./LandingPage";
 import Dashboard from "./Dashboard";
+import { apiFetch } from "./utils/api";
 
 function ProtectedRoute({ children, isLoggedIn }) {
-  if (!isLoggedIn) {
-    return <Navigate to="/" />;
-  }
+  if (!isLoggedIn) return <Navigate to="/" />;
   return children;
 }
 
 function PublicRoute({ children, isLoggedIn }) {
-  if (isLoggedIn) {
-    return <Navigate to="/dashboard" />;
-  }
+  if (isLoggedIn) return <Navigate to="/dashboard" />;
   return children;
 }
 
@@ -31,6 +28,9 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [monthlyBudget, setMonthlyBudget] = useState(0);
+  const [crosshairEnabled, setCrosshairEnabled] = useState(
+    () => localStorage.getItem("crosshair") !== "false",
+  );
 
   const handleLoginSuccess = (name, id, monthlyBudget) => {
     setIsLoggedIn(true);
@@ -46,40 +46,49 @@ function App() {
     return <Navigate to="/" />;
   };
 
-  useEffect(() => {
-    fetch("/api/me", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 401) {
-          localStorage.removeItem("access_token");
-          setIsLoading(false);
-          window.location.href = "/login";
-          return;
-        }
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        if (data) {
-          handleLoginSuccess(data.username, data.id, data.monthly_budget);
-        }
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading) return null;
-
   const handleUpdateBudget = (newBudget) => {
     setMonthlyBudget(newBudget);
   };
 
+  const handleToggleCrosshair = () => {
+    setCrosshairEnabled((prev) => {
+      const newValue = !prev;
+      localStorage.setItem("crosshair", String(newValue));
+      return newValue;
+    });
+  };
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const response = await apiFetch("/api/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      if (response.status === 401) {
+        localStorage.removeItem("access_token");
+        setIsLoading(false);
+        window.location.href = "/login";
+        return;
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        handleLoginSuccess(data.username, data.id, data.monthly_budget);
+      }
+
+      setIsLoading(false);
+    };
+
+    checkAuth();
+  }, []);
+
+  if (isLoading) return <div style={{ cursor: "wait" }} />;
+
   return (
     <Router>
-      <Crosshair color="#FF0707" />
+      {crosshairEnabled && <Crosshair color="#FF0707" />}
       <Routes>
         <Route
           path="/"
@@ -104,7 +113,10 @@ function App() {
           path="/register"
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
-              <RegisterForm isLoggedIn={isLoggedIn} />
+              <RegisterForm
+                isLoggedIn={isLoggedIn}
+                onLoginSuccess={handleLoginSuccess}
+              />
             </PublicRoute>
           }
         />
@@ -119,6 +131,8 @@ function App() {
                 onSignOut={handleSignOut}
                 monthlyBudget={monthlyBudget}
                 onUpdateBudget={handleUpdateBudget}
+                crosshairEnabled={crosshairEnabled}
+                onToggleCrosshair={handleToggleCrosshair}
               />
             </ProtectedRoute>
           }
