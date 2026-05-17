@@ -60,6 +60,7 @@ function App() {
 
   useEffect(() => {
     const checkAuth = async () => {
+      setIsLoading(true);
       const response = await apiFetch("/api/me", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -84,7 +85,12 @@ function App() {
     checkAuth();
   }, []);
 
-  if (isLoading) return <div style={{ cursor: "wait" }} />;
+  if (isLoading)
+    return (
+      <div style={{ cursor: "wait" }}>
+        ExpenseWise is starting up — please wait a moment...
+      </div>
+    );
 
   return (
     <Router>
