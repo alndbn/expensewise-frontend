@@ -5,9 +5,10 @@ export default function Settings({
   onUpdateBudget,
   onToggleCrosshair,
   crosshairEnabled,
+  handleDeleteAccount,
 }) {
   const [newBudget, setNewBudget] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // NEU
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleUpdateBudget = async () => {
     const response = await apiFetch("/api/users", {
@@ -20,8 +21,8 @@ export default function Settings({
     });
     if (response.ok) {
       onUpdateBudget(Number(newBudget));
-      setSuccessMessage("Budget successfully updated! ✓"); // NEU
-      setTimeout(() => setSuccessMessage(""), 3000); // NEU
+      setSuccessMessage("Budget successfully updated! ✓");
+      setTimeout(() => setSuccessMessage(""), 3000);
     }
   };
 
@@ -38,11 +39,11 @@ export default function Settings({
       {successMessage && (
         <p style={{ color: "green" }}>{successMessage}</p>
       )}{" "}
-      {/* NEU */}
       <p>Crosshair</p>
       <button onClick={onToggleCrosshair}>
         {crosshairEnabled ? "[ On ]" : "[ Off ]"}
       </button>
+      <button onClick={handleDeleteAccount}>Delete Account</button>
     </div>
   );
 }

@@ -94,6 +94,25 @@ export default function Dashboard({
     fetchSummary();
   }, [expenses]);
 
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm(
+      "You want to continue deleting your Account?",
+    );
+    if (confirmed) {
+      const response = await apiFetch(`/api/account`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      if (response.ok) {
+        localStorage.removeItem("access_token");
+        navigate("/");
+      }
+    }
+  };
+
   return (
     <div className="dashboard-page">
       <header className="dashboard-header">
@@ -142,6 +161,7 @@ export default function Dashboard({
               onUpdateBudget={onUpdateBudget}
               onToggleCrosshair={onToggleCrosshair}
               crosshairEnabled={crosshairEnabled}
+              handleDeleteAccount={handleDeleteAccount}
             />
           )}
         </main>
