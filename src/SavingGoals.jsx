@@ -90,7 +90,10 @@ export default function SavingGoals({ fetchSummary }) {
 
   return (
     <div>
-      <button onClick={() => setIsNewGoalModalOpen(true)}>
+      <button
+        className="button-settings"
+        onClick={() => setIsNewGoalModalOpen(true)}
+      >
         [ + New Goal ]
       </button>
 
