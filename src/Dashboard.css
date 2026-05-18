@@ -186,9 +186,9 @@
 
 /* ================================================
    SETTINGS
-   <p>  → Label auf einer Rasterlinie
-   <input> → eine Rasterzelle hoch
-   <button> → im Stil der App
+   <p>   Label auf einer Rasterlinie
+   <input>  eine Rasterzelle hoch
+   <button>  im Stil der App
    ================================================ */
 
 .dashboard-content > div > p {
@@ -196,7 +196,7 @@
   font-weight: bold;
   color: rgba(0, 0, 0, 0.75);
   line-height: 35px;
-  margin: 0 0 35px 0; /* eine Rasterlinie Abstand nach unten */
+  margin: 0 0 35px 0;
 }
 
 .dashboard-content > div > input[type="number"] {
@@ -212,7 +212,7 @@
   margin-right: 10px;
 }
 
-.dashboard-content > div > button {
+.button-settings {
   background: none;
   border: 1px solid rgba(220, 50, 50, 0.5);
   font-family: "JetBrains Mono", monospace;
@@ -259,6 +259,10 @@
 
 .dashboard-content table tr:last-child td {
   border-bottom: none;
+}
+
+.button-settings:hover {
+  background-color: rgba(220, 50, 50, 0.08);
 }
 
 /* ================================================

@@ -35,15 +35,28 @@ export default function Settings({
         value={newBudget}
         onChange={(e) => setNewBudget(e.target.value)}
       />
-      <button onClick={handleUpdateBudget}>Save</button>
-      {successMessage && (
-        <p style={{ color: "green" }}>{successMessage}</p>
-      )}{" "}
-      <p>Crosshair</p>
-      <button onClick={onToggleCrosshair}>
-        {crosshairEnabled ? "[ On ]" : "[ Off ]"}
+      <button className="button-settings" onClick={handleUpdateBudget}>
+        Save
       </button>
-      <button onClick={handleDeleteAccount}>Delete Account</button>
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}{" "}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "16px",
+          marginTop: "35px",
+        }}
+      >
+        <span>Crosshair</span>
+        <button className="button-settings" onClick={onToggleCrosshair}>
+          {crosshairEnabled ? "[ On ]" : "[ Off ]"}
+        </button>
+      </div>
+      <div style={{ marginTop: "35px" }}>
+        <button className="button-settings" onClick={handleDeleteAccount}>
+          Delete Account
+        </button>
+      </div>
     </div>
   );
 }
