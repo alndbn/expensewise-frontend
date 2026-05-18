@@ -23,6 +23,7 @@ export default function Dashboard({
   const [expenses, setExpenses] = useState([]);
   const [newBudget, setNewBudget] = useState("");
   //console.log("expenses: ", expenses);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const sidebarLinks = [
     "Dashboard",
@@ -101,22 +102,20 @@ export default function Dashboard({
   }, [expenses]);
 
   const handleDeleteAccount = async () => {
-    const confirmed = window.confirm(
-      "You want to continue deleting your Account?",
-    );
-    if (confirmed) {
-      const response = await apiFetch(`/api/users`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
+    setIsDeleteModalOpen(true);
+  };
+  const handleConfirmDelete = async () => {
+    const response = await apiFetch(`/api/users`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
 
-      if (response.ok) {
-        localStorage.removeItem("access_token");
-        onSignOut();
-      }
+    if (response.ok) {
+      localStorage.removeItem("access_token");
+      onSignOut();
     }
   };
 
@@ -173,6 +172,19 @@ export default function Dashboard({
           )}
         </main>
       </div>
+      {isDeleteModalOpen && (
+        <>
+          <div
+            className="modal-backdrop"
+            onClick={() => setIsDeleteModalOpen(false)}
+          />
+          <div className="modal">
+            <p>Are you sure you want to delete your account?</p>
+            <button onClick={() => setIsDeleteModalOpen(false)}>Cancel</button>
+            <button onClick={handleConfirmDelete}>Delete</button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
