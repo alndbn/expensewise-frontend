@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import Transactions from "./Transactions";
@@ -46,6 +46,9 @@ export default function Dashboard({
   };
 
   const fetchSummary = async () => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) return;
     const response = await apiFetch(`/api/expenses/user/summary`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -59,6 +62,9 @@ export default function Dashboard({
   };
 
   const fetchExpenses = async () => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) return;
     const response = await apiFetch(`/api/expenses/user`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -99,16 +105,17 @@ export default function Dashboard({
       "You want to continue deleting your Account?",
     );
     if (confirmed) {
-      const response = await apiFetch(`/api/account`, {
+      const response = await apiFetch(`/api/users`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       });
+
       if (response.ok) {
         localStorage.removeItem("access_token");
-        navigate("/");
+        onSignOut();
       }
     }
   };
