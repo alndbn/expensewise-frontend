@@ -24,6 +24,7 @@ export default function Dashboard({
   const [newBudget, setNewBudget] = useState("");
   //console.log("expenses: ", expenses);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const sidebarLinks = [
     "Dashboard",

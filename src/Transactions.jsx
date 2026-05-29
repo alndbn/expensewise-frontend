@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { apiFetch } from "./utils/api";
 
-const CATEGORIES = ["Groceries", "Transport", "Health", "Savings", "Other"];
-
-export default function Transactions({ expenses, fetchExpenses }) {
+export default function Transactions({ expenses, fetchExpenses, categories }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -144,9 +142,9 @@ export default function Transactions({ expenses, fetchExpenses }) {
                 })
               }
             >
-              {CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.title}>
+                  {cat.title}
                 </option>
               ))}
             </select>

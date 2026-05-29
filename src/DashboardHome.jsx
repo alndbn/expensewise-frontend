@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiFetch } from "./utils/api";
 
 export default function DashboardHome({
@@ -13,7 +13,14 @@ export default function DashboardHome({
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
-  const CATEGORIES = ["Groceries", "Transport", "Health", "Savings", "Other"];
+  const defaultCategories = [
+    { id: "Groceries", title: "Groceries" },
+    { id: "Transport", title: "Transport" },
+    { id: "Health", title: "Health" },
+    { id: "Savings", title: "Savings" },
+    { id: "Other", title: "Other" },
+  ];
+  const [categories, setCategories] = useState([]);
 
   const handleSaveExpenses = async () => {
     const response = await apiFetch("/api/expenses", {
@@ -30,6 +37,25 @@ export default function DashboardHome({
       fetchExpenses();
     }
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const token = localStorage.getItem("access_token");
+
+      if (!token) return;
+      const response = await apiFetch(`/api/categories`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      if (response.ok) {
+        const fetchedCategories = await response.json();
+
+        setCategories([...defaultCategories, ...fetchedCategories]);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   return (
     <div>
@@ -64,9 +90,9 @@ export default function DashboardHome({
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">Select category</option>
-              {CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.title}>
+                  {cat.title}
                 </option>
               ))}
             </select>

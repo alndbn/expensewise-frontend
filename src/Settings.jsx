@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiFetch } from "./utils/api";
 
 export default function Settings({
@@ -9,6 +9,24 @@ export default function Settings({
 }) {
   const [newBudget, setNewBudget] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [newCategory, setNewCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  const fetchCategories = async () => {
+    const response = await apiFetch("/api/categories", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setCategories(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const handleUpdateBudget = async () => {
     const response = await apiFetch("/api/users", {
@@ -26,6 +44,33 @@ export default function Settings({
     }
   };
 
+  const handleAddCategory = async () => {
+    const response = await apiFetch("/api/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify({ title: newCategory }),
+    });
+    if (response.ok) {
+      setNewCategory("");
+      fetchCategories();
+    }
+  };
+
+  const handleDeleteCategory = async (category_id) => {
+    const response = await apiFetch(`/api/categories/${category_id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    });
+    if (response.ok) {
+      fetchCategories();
+    }
+  };
+
   return (
     <div>
       <p>Monthly Budget</p>
@@ -38,7 +83,31 @@ export default function Settings({
       <button className="button-settings" onClick={handleUpdateBudget}>
         Save
       </button>
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}{" "}
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+
+      <div style={{ marginTop: "35px" }}>
+        <p>Categories</p>
+        <input
+          type="text"
+          placeholder="New Category"
+          value={newCategory}
+          onChange={(e) => setNewCategory(e.target.value)}
+        />
+        <button className="button-settings" onClick={handleAddCategory}>
+          Add
+        </button>
+        <ul>
+          {categories.map((cat) => (
+            <li key={cat.id}>
+              {cat.title}
+              <button onClick={() => handleDeleteCategory(cat.id)}>
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <div
         style={{
           display: "flex",
@@ -52,6 +121,7 @@ export default function Settings({
           {crosshairEnabled ? "[ On ]" : "[ Off ]"}
         </button>
       </div>
+
       <div style={{ marginTop: "35px" }}>
         <button className="button-settings" onClick={handleDeleteAccount}>
           Delete Account
