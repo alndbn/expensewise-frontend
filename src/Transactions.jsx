@@ -85,7 +85,9 @@ export default function Transactions({ expenses, fetchExpenses, categories }) {
               <td>{expense.date}</td>
               <td>{expense.title}</td>
               <td>{expense.category}</td>
-              <td>{expense.amount}</td>
+              <td>
+                {expense.amount} {expense.currency}
+              </td>
               <td>
                 <button
                   onClick={() => {

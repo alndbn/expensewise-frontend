@@ -28,15 +28,17 @@ function App() {
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [monthlyBudget, setMonthlyBudget] = useState(0);
+  const [baseCurrency, setBaseCurrency] = useState("EUR");
   const [crosshairEnabled, setCrosshairEnabled] = useState(
     () => localStorage.getItem("crosshair") !== "false",
   );
 
-  const handleLoginSuccess = (name, id, monthlyBudget) => {
+  const handleLoginSuccess = (name, id, monthlyBudget, baseCurrency) => {
     setIsLoggedIn(true);
     setUsername(name);
     setUserId(id);
     setMonthlyBudget(monthlyBudget);
+    setBaseCurrency(baseCurrency);
   };
 
   const handleSignOut = () => {
@@ -76,7 +78,12 @@ function App() {
 
       if (response.ok) {
         const data = await response.json();
-        handleLoginSuccess(data.username, data.id, data.monthly_budget);
+        handleLoginSuccess(
+          data.username,
+          data.id,
+          data.monthly_budget,
+          data.base_currency,
+        );
       }
 
       setIsLoading(false);
@@ -139,6 +146,7 @@ function App() {
                 onUpdateBudget={handleUpdateBudget}
                 crosshairEnabled={crosshairEnabled}
                 onToggleCrosshair={handleToggleCrosshair}
+                baseCurrency={baseCurrency}
               />
             </ProtectedRoute>
           }

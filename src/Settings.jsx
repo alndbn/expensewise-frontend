@@ -6,11 +6,14 @@ export default function Settings({
   onToggleCrosshair,
   crosshairEnabled,
   handleDeleteAccount,
+  baseCurrency,
 }) {
   const [newBudget, setNewBudget] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [newCategory, setNewCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState(baseCurrency);
+  const CURRENCIES = ["EUR", "USD", "GBP", "CHF", "JPY", "CAD", "AUD"];
 
   const fetchCategories = async () => {
     const response = await apiFetch("/api/categories", {
@@ -39,7 +42,22 @@ export default function Settings({
     });
     if (response.ok) {
       onUpdateBudget(Number(newBudget));
-      setSuccessMessage("Budget successfully updated! ✓");
+      setSuccessMessage("Budget successfully updated!");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    }
+  };
+
+  const handleUpdateCurrency = async () => {
+    const response = await apiFetch("/api/users", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify({ base_currency: selectedCurrency }),
+    });
+    if (response.ok) {
+      setSuccessMessage("Currency successfully updated!");
       setTimeout(() => setSuccessMessage(""), 3000);
     }
   };
@@ -84,6 +102,23 @@ export default function Settings({
         Save
       </button>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+
+      <div style={{ marginTop: "35px" }}>
+        <p>Base Currency</p>
+        <select
+          value={selectedCurrency}
+          onChange={(e) => setSelectedCurrency(e.target.value)}
+        >
+          {CURRENCIES.map((cur) => (
+            <option key={cur} value={cur}>
+              {cur}
+            </option>
+          ))}
+        </select>
+        <button className="button-settings" onClick={handleUpdateCurrency}>
+          Save
+        </button>
+      </div>
 
       <div style={{ marginTop: "35px" }}>
         <p>Categories</p>
