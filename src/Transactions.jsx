@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { apiFetch } from "./utils/api";
+import { CURRENCY_SYMBOLS } from "./utils/currency";
 
-export default function Transactions({ expenses, fetchExpenses, categories }) {
+export default function Transactions({
+  expenses,
+  fetchExpenses,
+  categories,
+  baseCurrency,
+}) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -87,6 +93,9 @@ export default function Transactions({ expenses, fetchExpenses, categories }) {
               <td>{expense.category}</td>
               <td>
                 {expense.amount} {expense.currency}
+                {expense.currency !== baseCurrency &&
+                  expense.amount_base &&
+                  ` / ${expense.amount_base.toFixed(2)} ${CURRENCY_SYMBOLS[baseCurrency]}`}
               </td>
               <td>
                 <button

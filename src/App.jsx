@@ -32,7 +32,7 @@ function App() {
   const [crosshairEnabled, setCrosshairEnabled] = useState(
     () => localStorage.getItem("crosshair") !== "false",
   );
-
+  console.log(baseCurrency);
   const handleLoginSuccess = (name, id, monthlyBudget, baseCurrency) => {
     setIsLoggedIn(true);
     setUsername(name);
@@ -58,6 +58,10 @@ function App() {
       localStorage.setItem("crosshair", String(newValue));
       return newValue;
     });
+  };
+
+  const handleUpdateCurrency = (newCurrency) => {
+    setBaseCurrency(newCurrency);
   };
 
   useEffect(() => {
@@ -147,6 +151,7 @@ function App() {
                 crosshairEnabled={crosshairEnabled}
                 onToggleCrosshair={handleToggleCrosshair}
                 baseCurrency={baseCurrency}
+                onUpdateCurrency={handleUpdateCurrency}
               />
             </ProtectedRoute>
           }

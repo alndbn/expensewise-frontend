@@ -17,6 +17,7 @@ export default function Dashboard({
   onToggleCrosshair,
   crosshairEnabled,
   baseCurrency,
+  onUpdateCurrency,
 }) {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState("Dashboard");
@@ -156,11 +157,21 @@ export default function Dashboard({
                 fetchExpenses={fetchExpenses}
                 baseCurrency={baseCurrency}
               />
-              <Transactions expenses={expenses} fetchExpenses={fetchExpenses} />
+              <Transactions
+                expenses={expenses}
+                fetchExpenses={fetchExpenses}
+                categories={categories}
+                baseCurrency={baseCurrency}
+              />
             </>
           )}
           {activePage === "Transactions" && (
-            <Transactions expenses={expenses} fetchExpenses={fetchExpenses} />
+            <Transactions
+              expenses={expenses}
+              fetchExpenses={fetchExpenses}
+              categories={categories}
+              baseCurrency={baseCurrency}
+            />
           )}
           {activePage === "Saving Goals" && (
             <SavingGoals fetchSummary={fetchSummary} />
@@ -172,6 +183,7 @@ export default function Dashboard({
               crosshairEnabled={crosshairEnabled}
               handleDeleteAccount={handleDeleteAccount}
               baseCurrency={baseCurrency}
+              onUpdateCurrency={onUpdateCurrency}
             />
           )}
         </main>

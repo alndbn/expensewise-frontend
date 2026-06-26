@@ -34,6 +34,7 @@ function LoginForm({ isLoggedIn, onLoginSuccess }) {
         data.user.username,
         data.user.id,
         data.user.monthly_budget,
+        data.user.base_currency,
       );
       navigate("/dashboard");
     } catch (error) {

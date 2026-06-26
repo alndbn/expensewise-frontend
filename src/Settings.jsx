@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiFetch } from "./utils/api";
+import { CURRENCIES } from "./utils/currency";
+import DEFAULT_CATEGORIES from "./utils/categories";
 
 export default function Settings({
   onUpdateBudget,
@@ -7,13 +9,13 @@ export default function Settings({
   crosshairEnabled,
   handleDeleteAccount,
   baseCurrency,
+  onUpdateCurrency,
 }) {
   const [newBudget, setNewBudget] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [newCategory, setNewCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState(baseCurrency);
-  const CURRENCIES = ["EUR", "USD", "GBP", "CHF", "JPY", "CAD", "AUD"];
 
   const fetchCategories = async () => {
     const response = await apiFetch("/api/categories", {
@@ -23,7 +25,8 @@ export default function Settings({
     });
     if (response.ok) {
       const data = await response.json();
-      setCategories(data);
+      let joined_categories = [...data, ...DEFAULT_CATEGORIES];
+      setCategories(joined_categories);
     }
   };
 
@@ -59,6 +62,7 @@ export default function Settings({
     if (response.ok) {
       setSuccessMessage("Currency successfully updated!");
       setTimeout(() => setSuccessMessage(""), 3000);
+      onUpdateCurrency(selectedCurrency);
     }
   };
 
@@ -135,9 +139,11 @@ export default function Settings({
           {categories.map((cat) => (
             <li key={cat.id}>
               {cat.title}
-              <button onClick={() => handleDeleteCategory(cat.id)}>
-                Delete
-              </button>
+              {!(DEFAULT_CATEGORIES.indexOf(cat) > -1) && (
+                <button onClick={() => handleDeleteCategory(cat.id)}>
+                  Delete
+                </button>
+              )}
             </li>
           ))}
         </ul>

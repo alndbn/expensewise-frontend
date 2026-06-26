@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiFetch } from "./utils/api";
+import { CURRENCY_SYMBOLS, CURRENCIES } from "./utils/currency";
+import DEFAULT_CATEGORIES from "./utils/categories";
 
 export default function DashboardHome({
   username,
@@ -15,23 +17,7 @@ export default function DashboardHome({
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
   const [currency, setCurrency] = useState("EUR");
-  const CURRENCIES = ["EUR", "USD", "GBP", "CHF", "JPY", "CAD", "AUD"];
-  const CURRENCY_SYMBOLS = {
-    EUR: "€",
-    GBP: "£",
-    USD: "$",
-    CHF: "Fr",
-    JPY: "¥",
-    CAD: "CA$",
-    AUD: "A$",
-  };
-  const defaultCategories = [
-    { id: "Groceries", title: "Groceries" },
-    { id: "Transport", title: "Transport" },
-    { id: "Health", title: "Health" },
-    { id: "Savings", title: "Savings" },
-    { id: "Other", title: "Other" },
-  ];
+  const defaultCategories = DEFAULT_CATEGORIES;
   const [categories, setCategories] = useState([]);
 
   const handleSaveExpenses = async () => {
