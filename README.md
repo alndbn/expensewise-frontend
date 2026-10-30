@@ -1,16 +1,23 @@
-# React + Vite
+# ExpenseWise (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application for personal finance: track expenses, manage savings goals and convert amounts between currencies.
 
-Currently, two official plugins are available:
+**Live demo:** https://expensewise-frontend.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Backend (Flask API):** https://github.com/alndbn/expensewise-backend
 
-## React Compiler
+## Features
+- Sign up and log in with JWT authentication
+- Create, edit and delete expenses
+- Manage savings goals
+- Custom categories per user
+- Multiple currencies with conversion via an external exchange rate API
+- Protected pages with React Router
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
+- Frontend: React, Vite, React Router, GSAP
+- Backend: Flask, SQLAlchemy, PostgreSQL (Neon)
+- Deployment: Vercel (frontend), Render (backend)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Note
+The backend runs on Render's free tier, so the first request can take a few seconds.
