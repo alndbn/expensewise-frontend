@@ -33,8 +33,8 @@ function LandingPage() {
             way with personalized categories.
           </li>
           <li>
-            <strong>Set Monthly Budgets:</strong> Define your limits and get
-            notified before you overspend.
+            <strong>Set Monthly Budgets:</strong> Define your monthly spending
+            limit.
           </li>
         </ul>
         <div className="cta-buttons">
