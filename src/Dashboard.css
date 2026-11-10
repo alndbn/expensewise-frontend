@@ -196,7 +196,7 @@
   font-weight: bold;
   color: rgba(0, 0, 0, 0.75);
   line-height: 35px;
-  margin: 0 0 35px 0;
+  margin: 0 0 0 0;
 }
 
 .dashboard-content > div > input[type="number"] {
@@ -226,6 +226,27 @@
 
 .dashboard-content > div > button:hover {
   background-color: rgba(220, 50, 50, 0.08);
+}
+
+.settings-label {
+  font-size: 17px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.75);
+  line-height: 35px;
+  margin: 0 0 0 0;
+}
+
+.categories-label {
+  font-size: 17px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 35px;
+  margin: 0 0 0 0;
+}
+
+.list-label {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  list-style-position: inside;
 }
 
 /* ================================================
@@ -308,7 +329,6 @@
   color: rgba(0, 0, 0, 0.8);
   box-sizing: border-box;
   margin-right: 10px;
-  margin-bottom: 35px;
 }
 .dashboard-content > div > p + input,
 .dashboard-content > div > p + button {
