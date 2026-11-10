@@ -95,7 +95,7 @@ export default function Settings({
 
   return (
     <div>
-      <p>Monthly Budget</p>
+      <p className="settings-label">Monthly Budget</p>
       <input
         type="number"
         placeholder="New Budget"
@@ -108,7 +108,7 @@ export default function Settings({
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
 
       <div style={{ marginTop: "35px" }}>
-        <p>Base Currency</p>
+        <p className="settings-label">Base Currency</p>
         <select
           value={selectedCurrency}
           onChange={(e) => setSelectedCurrency(e.target.value)}
@@ -125,7 +125,7 @@ export default function Settings({
       </div>
 
       <div style={{ marginTop: "35px" }}>
-        <p>Categories</p>
+        <p className="settings-label">Categories</p>
         <input
           type="text"
           placeholder="New Category"
@@ -135,12 +135,15 @@ export default function Settings({
         <button className="button-settings" onClick={handleAddCategory}>
           Add
         </button>
-        <ul>
+        <ul className="list-label">
           {categories.map((cat) => (
-            <li key={cat.id}>
+            <li className="categories-label" key={cat.id}>
               {cat.title}
               {!(DEFAULT_CATEGORIES.indexOf(cat) > -1) && (
-                <button onClick={() => handleDeleteCategory(cat.id)}>
+                <button
+                  className="button-settings"
+                  onClick={() => handleDeleteCategory(cat.id)}
+                >
                   Delete
                 </button>
               )}
