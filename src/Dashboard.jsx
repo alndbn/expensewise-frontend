@@ -174,7 +174,10 @@ export default function Dashboard({
             />
           )}
           {activePage === "Saving Goals" && (
-            <SavingGoals fetchSummary={fetchSummary} />
+            <SavingGoals
+              fetchSummary={fetchSummary}
+              baseCurrency={baseCurrency}
+            />
           )}
           {activePage === "Settings" && (
             <Settings
