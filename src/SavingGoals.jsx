@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiFetch } from "./utils/api";
 
-export default function SavingGoals({ fetchSummary }) {
+export default function SavingGoals({ fetchSummary, baseCurrency }) {
   const [savingGoals, setSavingGoals] = useState([]);
   const [selectedGoalId, setSelectedGoalId] = useState(null);
   const [isSavingGoalModalOpen, setIsSavingGoalModalOpen] = useState(false);
@@ -65,7 +65,7 @@ export default function SavingGoals({ fetchSummary }) {
       setSavingAmount("");
       fetchSavingGoals();
 
-      const expenseResponse = await fetch("/api/expenses", {
+      const expenseResponse = await apiFetch("/api/expenses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,6 +76,7 @@ export default function SavingGoals({ fetchSummary }) {
           amount: savingAmount,
           category: "Savings",
           date: new Date().toISOString().split("T")[0],
+          currency: baseCurrency,
         }),
       });
       if (expenseResponse.ok) {
